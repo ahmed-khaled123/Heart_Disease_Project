@@ -6,36 +6,6 @@ from pathlib import Path
 from typing import Tuple, List
 
 
-import pandas as pd
-import numpy as np
-
-raw_path = r"D:\sprints\Heart_Disease_Project\data\processed.cleveland.data"
-out_path = r"D:\sprints\Heart_Disease_Project\data\heart_disease.csv"
-
-headers = [
-    "age","sex","cp","trestbps","chol","fbs","restecg","thalach",
-    "exang","oldpeak","slope","ca","thal","num"
-]
-
-# قراءة الملف بفواصل عادية
-df = pd.read_csv(raw_path, header=None, names=headers)
-
-# استبدال missing values
-df = df.replace(["?", -9], np.nan)
-
-# حفظ CSV نظيف
-df.to_csv(out_path, index=False)
-
-print("Saved clean dataset at:", out_path)
-print(df.head())
-
-
-
-
-
-
-
-
 
 
 
@@ -48,9 +18,9 @@ UCI_EXPECTED_COLUMNS = [
     "exang","oldpeak","slope","ca","thal","target"
 ]
 
-def load_heart_data(data_path: str = "data/heart_disease.csv",
+def load_heart_data(data_path: str = r"D:\sprints\Heart_Disease_Project\data\heart_disease.csv",
                     allow_synthetic: bool = True,
-                    synthetic_path: str = "data/sample_heart_disease.csv") -> pd.DataFrame:
+                    synthetic_path: str = r"D:\sprints\Heart_Disease_Project\data\heart_disease.csv") -> pd.DataFrame:
     # Load the UCI Heart Disease dataset from a CSV at a relative path.
     # If not found and allow_synthetic=True, it falls back to a synthetic CSV.
     data_file = Path(data_path)
