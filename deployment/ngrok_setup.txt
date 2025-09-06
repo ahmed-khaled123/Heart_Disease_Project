@@ -1,0 +1,17 @@
+
+# Ngrok Deployment Steps (Bonus)
+
+1) Install ngrok and authenticate:
+   https://ngrok.com/download
+   ngrok config add-authtoken YOUR_AUTHTOKEN
+
+2) Start your Streamlit app locally:
+   streamlit run ui/app.py
+
+3) In a new terminal, expose port 8501 (Streamlit default):
+   ngrok http 8501
+
+4) Copy the forwarding HTTPS URL that ngrok prints (e.g., https://xxxx-xx-xx-xx-xx.ngrok-free.app)
+   and share it for live access.
+
+Note: Free ngrok URLs rotate; for stable URLs consider paid plans.
