@@ -27,7 +27,8 @@ def elbow_method(X_scaled, ks=range(1, 11)):
         inertias.append(kmeans.inertia_)
     return inertias
 
-def main():
+
+def main(show_plots=True):
     df = load_heart_data(str(DATA_PATH), allow_synthetic=True, synthetic_path=str(SYNTH_PATH))
     X, y = split_features_target(df)
 
@@ -38,45 +39,54 @@ def main():
 
     ks = list(range(1, 11))
     inertias = elbow_method(X_scaled, ks)
-    plt.figure()
-    plt.plot(ks, inertias, marker="o")
-    plt.xlabel("k")
-    plt.ylabel("Inertia")
-    plt.title("K-Means Elbow Method")
-    plt.tight_layout()
-    plt.savefig(RESULTS_DIR / "kmeans_elbow.png")
-    plt.close()
+    print("K-Means Elbow Method Inertias:")
+    for k, inertia in zip(ks, inertias):
+        print(f"  k={k}, inertia={inertia}")
+
+    if show_plots:
+        plt.figure()
+        plt.plot(ks, inertias, marker="o")
+        plt.xlabel("k")
+        plt.ylabel("Inertia")
+        plt.title("K-Means Elbow Method")
+        plt.show()
 
     kmeans = KMeans(n_clusters=2, random_state=42, n_init="auto")
     labels_km = kmeans.fit_predict(X_scaled)
 
     Z = linkage(X_scaled, method="ward")
-    plt.figure(figsize=(8, 5))
-    dendrogram(Z, truncate_mode="lastp", p=30, leaf_rotation=90.)
-    plt.title("Hierarchical Clustering Dendrogram (truncated)")
-    plt.tight_layout()
-    plt.savefig(RESULTS_DIR / "hierarchical_dendrogram.png")
-    plt.close()
+    if show_plots:
+        plt.figure(figsize=(8, 5))
+        dendrogram(Z, truncate_mode="lastp", p=30, leaf_rotation=90.)
+        plt.title("Hierarchical Clustering Dendrogram (truncated)")
+        plt.show()
 
     agg = AgglomerativeClustering(n_clusters=2)
     labels_agg = agg.fit_predict(X_scaled)
 
     if y is not None:
+        kmeans_match = (labels_km == y.values).mean()
+        agg_match = (labels_agg == y.values).mean()
+        print(f"KMeans vs target match rate: {kmeans_match:.4f}")
+        print(f"Agglomerative vs target match rate: {agg_match:.4f}")
+
         comp = {
-            "kmeans_vs_target_match_rate": float((labels_km==y.values).mean()),
-            "agg_vs_target_match_rate": float((labels_agg==y.values).mean())
+            "kmeans_vs_target_match_rate": float(kmeans_match),
+            "agg_vs_target_match_rate": float(agg_match)
         }
         with open(RESULTS_DIR / "clustering_comparison.json", "w") as f:
             json.dump(comp, f, indent=2)
 
-    plt.figure()
-    plt.scatter(X_pca[:,0], X_pca[:,1], c=labels_km)
-    plt.xlabel("PC1"); plt.ylabel("PC2"); plt.title("K-Means Clusters (PCA 2D)")
-    plt.tight_layout()
-    plt.savefig(RESULTS_DIR / "kmeans_pca_scatter.png")
-    plt.close()
+    if show_plots:
+        plt.figure()
+        plt.scatter(X_pca[:, 0], X_pca[:, 1], c=labels_km)
+        plt.xlabel("PC1")
+        plt.ylabel("PC2")
+        plt.title("K-Means Clusters (PCA 2D)")
+        plt.show()
 
     print("Unsupervised analysis complete.")
+
 
 if __name__ == "__main__":
     main()
