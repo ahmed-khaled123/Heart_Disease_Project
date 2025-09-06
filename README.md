@@ -35,6 +35,7 @@ Artifacts will be saved to `models/` and `results/`. If `data/heart_disease.csv`
 ## Notebooks
 
 Notebooks in `notebooks/` mirror each step:
+
 - `01_data_preprocessing.ipynb`
 - `02_pca_analysis.ipynb`
 - `03_feature_selection.ipynb`
@@ -50,7 +51,6 @@ Steps in `deployment/ngrok_setup.txt` show how to expose the local Streamlit app
 
 ## File Structure
 
-```
 Heart_Disease_Project/
 ├── data/
 │   ├── heart_disease.csv                 # <- put the real dataset here
@@ -81,7 +81,6 @@ Heart_Disease_Project/
 ├── requirements.txt
 ├── README.md
 └── .gitignore
-```
 
 ## Notes
 
