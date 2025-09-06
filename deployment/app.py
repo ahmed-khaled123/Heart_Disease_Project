@@ -3,8 +3,9 @@ import pandas as pd
 import joblib
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parent.parent  
 MODEL_PATH = PROJECT_ROOT / "models" / "randomforest_tuned.pkl"
+
 model = joblib.load(MODEL_PATH)
 
 st.title("❤️ Heart Disease Risk Prediction App ❤️")
