@@ -18,7 +18,6 @@ DATA_PATH = PROJECT_ROOT / "data" / "heart_disease.csv"
 SYNTH_PATH = PROJECT_ROOT / "data" / "sample_heart_disease.csv"
 RESULTS_DIR = PROJECT_ROOT / "results"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-
 def elbow_method(X_scaled, ks=range(1, 11)):
     inertias = []
     for k in ks:
