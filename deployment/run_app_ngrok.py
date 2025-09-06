@@ -4,7 +4,7 @@ import os
 
 STREAMLIT_APP = r"D:\sprints\Heart_Disease_Project\deployment\app.py"
 
-NGROK_PATH = r"D:\path\to\ngrok\ngrok.exe"  # عدل المسار حسب مكان ngrok.exe عندك
+NGROK_PATH = r"D:\path\to\ngrok\ngrok.exe"  
 
 print("Starting Streamlit app...")
 streamlit_process = subprocess.Popen(["streamlit", "run", STREAMLIT_APP])

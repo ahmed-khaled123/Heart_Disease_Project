@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent  
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 MODEL_PATH = PROJECT_ROOT / "models" / "randomforest_tuned.pkl"
 
 model = joblib.load(MODEL_PATH)
@@ -42,9 +42,8 @@ thal = st.selectbox(
 fbs = st.selectbox("Fasting Blood Sugar > 120 mg/dL", ["No (0)", "Yes (1)"])
 
 sex_num = 1 if sex == "Male" else 0
-
 cp_num = int(cp.split(" - ")[0])
-exang_num = int(exang.split(" ")[-1])
+exang_num = int(exang.split("(")[-1].replace(")", ""))
 restecg_num = int(restecg.split("(")[-1].replace(")", ""))
 slope_num = int(slope.split("(")[-1].replace(")", ""))
 thal_num = int(thal.split("(")[-1].replace(")", ""))
@@ -64,4 +63,3 @@ if st.button("Predict"):
         st.error("⚠️ High Risk of Heart Disease")
     else:
         st.success("✅ Low Risk of Heart Disease")
-

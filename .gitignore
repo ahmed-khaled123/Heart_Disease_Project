@@ -3,6 +3,7 @@ __pycache__/
 *.pyo
 *.pyd
 *.pkl
+!models/randomforest_tuned.pkl
 *.egg-info/
 .ipynb_checkpoints/
 .DS_Store
